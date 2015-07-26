@@ -45,6 +45,14 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+        <activity
+            android:name=".ShowItemActivity"
+            android:label="@string/title_activity_show_item" >
+        </activity>
+        <activity
+            android:name=".ShowRestaurantActivity"
+            android:label="@string/title_activity_show_restaurant" >
+        </activity>
     </application>
 
 </manifest>

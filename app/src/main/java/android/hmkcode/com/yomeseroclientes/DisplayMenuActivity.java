@@ -102,7 +102,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         protected void onPostExecute(String result){
             try {
                 JSONArray json_items = new JSONArray(result);
-                ArrayList<Item> items = new ArrayList<>();
+                final ArrayList<Item> items = new ArrayList<>();
                 Item aux;
                 for (int i = 0; i < json_items.length(); i++) {
                     aux = new Item();
@@ -115,12 +115,13 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-                        intent.putExtra("ID", position);
+                        Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
+                        intent.putExtra("name", items.get(position).item_name);
+                        intent.putExtra("type", items.get(position).item_type);
+                        intent.putExtra("description", items.get(position).item_description);
+                        intent.putExtra("price", items.get(position).item_price);
+                        intent.putExtra("time", items.get(position).item_time);
                         startActivity(intent);
-                        /// En la nueva en onCreate
-                        //int i = getIntent().getIntExtra("ID", 0);
                     }
                 });
             } catch (JSONException e) {

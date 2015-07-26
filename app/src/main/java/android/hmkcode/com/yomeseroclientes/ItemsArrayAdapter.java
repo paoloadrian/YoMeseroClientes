@@ -17,14 +17,12 @@ import java.util.ArrayList;
  */
 public class ItemsArrayAdapter extends ArrayAdapter<Item> {
     private final Context context;
-    private ArrayList<Item> items;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> descriptions = new ArrayList<>();
 
     public ItemsArrayAdapter(Context context, ArrayList<Item> items) {
         super(context, R.layout.item_list, items);
         this.context = context;
-        this.items = items;
         for (int i = 0; i < items.size(); i++) {
             names.add("Nombre: "+items.get(i).item_name);
             descriptions.add("Tipo: "+items.get(i).item_type+" - Precio: Bs. "+items.get(i).item_price);

@@ -2,6 +2,7 @@ package android.hmkcode.com.yomeseroclientes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -99,7 +102,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         protected void onPostExecute(String result){
             try {
                 JSONArray json_restaurants = new JSONArray(result);
-                ArrayList<Restaurant> restaurants = new ArrayList<>();
+                final ArrayList<Restaurant> restaurants = new ArrayList<>();
                 Restaurant aux;
                 for (int i = 0; i < json_restaurants.length(); i++) {
                     aux = new Restaurant();
@@ -109,6 +112,18 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
 
                 RestaurantsArrayAdapter itemsArrayAdapter = new RestaurantsArrayAdapter(context,restaurants);
                 restaurantsListView.setAdapter(itemsArrayAdapter);
+                restaurantsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getApplicationContext(), ShowRestaurantActivity.class);
+                        intent.putExtra("name", restaurants.get(position).restaurant_name);
+                        intent.putExtra("type", restaurants.get(position).restaurant_type);
+                        intent.putExtra("description", restaurants.get(position).restaurant_description);
+                        intent.putExtra("address", restaurants.get(position).restaurant_address);
+                        intent.putExtra("phone", restaurants.get(position).restaurant_phone);
+                        startActivity(intent);
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }
