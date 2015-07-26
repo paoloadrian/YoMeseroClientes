@@ -38,7 +38,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         TextView textView2 = (TextView) rowView.findViewById(R.id.secondLine);
         textView.setText(names.get(position));
         textView2.setText(descriptions.get(position));
-        TextView quantity = (TextView)rowView.findViewById(R.id.cant);
+        TextView quantity = (TextView)rowView.findViewById(R.id.quantity);
         Button plus = (Button) rowView.findViewById(R.id.plusbutton);
         Button minus = (Button) rowView.findViewById(R.id.minusbutton);
         ButtonClickListener listener = new ButtonClickListener(quantity);

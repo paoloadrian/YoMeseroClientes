@@ -53,6 +53,10 @@
             android:name=".ShowRestaurantActivity"
             android:label="@string/title_activity_show_restaurant" >
         </activity>
+        <activity
+            android:name=".ConfirmOrderActivity"
+            android:label="@string/title_activity_confirm_order" >
+        </activity>
     </application>
 
 </manifest>

@@ -80,15 +80,6 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         return result;
     }
 
-    public Boolean isConnected(){
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo!=null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
-    }
-
     private class HttpAsyncTask extends AsyncTask<String,Void,String> {
         private Context context;
         public HttpAsyncTask(Context context){
@@ -115,7 +106,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
                 restaurantsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getApplicationContext(), ShowRestaurantActivity.class);
+                        Intent intent = new Intent(context, ShowRestaurantActivity.class);
                         intent.putExtra("name", restaurants.get(position).restaurant_name);
                         intent.putExtra("type", restaurants.get(position).restaurant_type);
                         intent.putExtra("description", restaurants.get(position).restaurant_description);

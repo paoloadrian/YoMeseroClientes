@@ -16,7 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 public class DisplayMenuActivity extends ActionBarActivity {
 
     ListView itemsListView;
+    ArrayList<Item> items;
+    ItemsArrayAdapter itemsArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,29 @@ public class DisplayMenuActivity extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
 
         new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/items.json");
+    }
+
+    public void goToConfirmOrder(View view){
+        Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
+        ArrayList<Integer> quantities = getQuantities();
+        intent.putExtra("items",items);
+        intent.putExtra("quantities",quantities);
+        startActivity(intent);
+    }
+
+    public ArrayList<Integer> getQuantities(){
+        ArrayList<Integer> quantities = new ArrayList<>();
+        View item_view;
+        TextView item_quantity;
+        int aux;
+        Log.d("Items",Integer.toString(itemsListView.getCount()));
+        for (int i = 0;i < itemsListView.getCount(); i++){
+            item_view = itemsListView.getChildAt(i);
+            item_quantity = (TextView) item_view.findViewById(R.id.quantity);
+            aux = Integer.parseInt(item_quantity.getText().toString());
+            quantities.add(aux);
+        }
+        return quantities;
     }
 
     public static String GET(String url){
@@ -80,15 +107,6 @@ public class DisplayMenuActivity extends ActionBarActivity {
         return result;
     }
 
-    public Boolean isConnected(){
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo!=null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
-    }
-
     private class HttpAsyncTask extends AsyncTask<String,Void,String> {
         private Context context;
         public HttpAsyncTask(Context context){
@@ -102,7 +120,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         protected void onPostExecute(String result){
             try {
                 JSONArray json_items = new JSONArray(result);
-                final ArrayList<Item> items = new ArrayList<>();
+                items = new ArrayList<>();
                 Item aux;
                 for (int i = 0; i < json_items.length(); i++) {
                     aux = new Item();
@@ -110,12 +128,12 @@ public class DisplayMenuActivity extends ActionBarActivity {
                     items.add(aux);
                 }
 
-                ItemsArrayAdapter itemsArrayAdapter = new ItemsArrayAdapter(context,items);
+                itemsArrayAdapter = new ItemsArrayAdapter(context,items);
                 itemsListView.setAdapter(itemsArrayAdapter);
                 itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
+                        Intent intent = new Intent(context, ShowItemActivity.class);
                         intent.putExtra("name", items.get(position).item_name);
                         intent.putExtra("type", items.get(position).item_type);
                         intent.putExtra("description", items.get(position).item_description);

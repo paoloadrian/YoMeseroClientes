@@ -50,7 +50,7 @@
         android:id="@+id/plusbutton"
         android:textColor="@android:color/white"
         android:background="#59B66C"
-        android:textSize="20dip"
+        android:textSize="20sp"
         android:layout_alignTop="@+id/firstLine"
         android:layout_alignLeft="@+id/minusbutton"
         android:layout_alignStart="@+id/minusbutton"
@@ -64,7 +64,7 @@
         android:id="@+id/minusbutton"
         android:textColor="@android:color/white"
         android:background="#FFF00016"
-        android:textSize="20dip"
+        android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/textView4"
         android:layout_toStartOf="@+id/textView4"
@@ -79,12 +79,12 @@
         android:textSize="16sp"
         android:textAlignment="center"
         android:layout_alignTop="@+id/plusbutton"
-        android:layout_toStartOf="@+id/cant"
+        android:layout_toStartOf="@+id/quantity"
         android:layout_alignBottom="@+id/minusbutton"
-        android:layout_toLeftOf="@+id/cant" />
+        android:layout_toLeftOf="@+id/quantity" />
 
     <TextView
-        android:id="@+id/cant"
+        android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"

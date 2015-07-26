@@ -9,11 +9,13 @@ import org.json.JSONObject;
  * Created by alex on 4/11/15.
  */
 public class Item {
+    public int id;
     public String item_name;
     public String item_description;
     public String item_type;
     public int item_time;
     public float item_price;
+    public int cant = 0;
 
     public String toJSON(){
         try {
@@ -46,6 +48,7 @@ public class Item {
 
     public void parseFromJson(JSONObject json){
         try {
+            id = Integer.parseInt(json.getString("id"));
             item_name = json.getString("item_name");
             item_description = json.getString("item_description");
             item_type = json.getString("item_type");

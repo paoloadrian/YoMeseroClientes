@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="android.hmkcode.com.yomeseroclientes.ConfirmOrderActivity">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="Item Name" />
+
+    <ImageView
+        android:id="@+id/iconRest"
+        android:gravity="center"
+        android:layout_width="178dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.14" />
+
+    <TextView
+        android:id="@+id/item_type"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Type"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/item_description"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/item_info"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Price and time"
+        android:textSize="12sp" />
+
+</LinearLayout>
