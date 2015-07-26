@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+=======
+>>>>>>> 0d6059efc2e943987c7e6039e93e2155d1d47e00
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -16,6 +19,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
+<<<<<<< HEAD
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -103,6 +107,30 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
+=======
+<<<<<<< HEAD
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+>>>>>>> 0d6059efc2e943987c7e6039e93e2155d1d47e00
   </component>
 </project>
 
+=======
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
+>>>>>>> 742040990ff753d8fea5f2731dda3b536b375230

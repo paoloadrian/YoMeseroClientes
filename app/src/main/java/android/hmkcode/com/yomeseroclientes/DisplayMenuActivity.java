@@ -2,6 +2,7 @@ package android.hmkcode.com.yomeseroclientes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -109,6 +112,17 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
                 ItemsArrayAdapter itemsArrayAdapter = new ItemsArrayAdapter(context,items);
                 itemsListView.setAdapter(itemsArrayAdapter);
+                itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                        intent.putExtra("ID", position);
+                        startActivity(intent);
+                        /// En la nueva en onCreate
+                        //int i = getIntent().getIntExtra("ID", 0);
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }
