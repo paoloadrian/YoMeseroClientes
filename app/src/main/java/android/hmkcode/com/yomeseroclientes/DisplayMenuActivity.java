@@ -58,7 +58,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
     public void goToConfirmOrder(View view){
         Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
-        ArrayList<Integer> quantities = getQuantities();
+        ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
         intent.putExtra("items",items);
         intent.putExtra("quantities",quantities);
         startActivity(intent);

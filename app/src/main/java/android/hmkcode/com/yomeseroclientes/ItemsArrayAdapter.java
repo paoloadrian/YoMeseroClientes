@@ -19,6 +19,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
     private final Context context;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> descriptions = new ArrayList<>();
+    public ArrayList<Integer> quantities = new ArrayList<>();
 
     public ItemsArrayAdapter(Context context, ArrayList<Item> items) {
         super(context, R.layout.item_list, items);
@@ -26,6 +27,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         for (int i = 0; i < items.size(); i++) {
             names.add("Nombre: "+items.get(i).item_name);
             descriptions.add("Tipo: "+items.get(i).item_type+" - Precio: Bs. "+items.get(i).item_price);
+            quantities.add(0);
         }
     }
 
@@ -41,17 +43,21 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         TextView quantity = (TextView)rowView.findViewById(R.id.quantity);
         Button plus = (Button) rowView.findViewById(R.id.plusbutton);
         Button minus = (Button) rowView.findViewById(R.id.minusbutton);
-        ButtonClickListener listener = new ButtonClickListener(quantity);
+        ButtonClickListener listener = new ButtonClickListener(position, quantity);
         plus.setOnClickListener(listener);
         minus.setOnClickListener(listener);
 
+        quantity.setText(Integer.toString(quantities.get(position)));
         // change the icon for Windows and iPhone
         return rowView;
     }
 
     private class ButtonClickListener implements View.OnClickListener {
+        private int position;
         private TextView textView;
-        public ButtonClickListener(TextView tv) {
+
+        public ButtonClickListener(int position, TextView tv) {
+            this.position = position;
             textView = tv;
         }
 
@@ -59,11 +65,14 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         public void onClick(View v) {
             int quantity = Integer.parseInt(textView.getText().toString());
             if (v.getId() == R.id.plusbutton) {
+                quantities.set(position, quantities.get(position) + 1);
                 textView.setText(Integer.toString(quantity + 1));
             }
             else {
-                if(quantity > 0)
+                if(quantity > 0) {
                     textView.setText(Integer.toString(quantity - 1));
+                    quantities.set(position, quantities.get(position) - 1);
+                }
             }
         }
     }
