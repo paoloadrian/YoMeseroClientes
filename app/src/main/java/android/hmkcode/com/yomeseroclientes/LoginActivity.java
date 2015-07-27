@@ -73,6 +73,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         setContentView(R.layout.activity_login);
 
         if (SaveSharedPreference.getUserId(LoginActivity.this).length()!=0){
+            Log.d("quede",SaveSharedPreference.getUserId(LoginActivity.this));
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
             finish();

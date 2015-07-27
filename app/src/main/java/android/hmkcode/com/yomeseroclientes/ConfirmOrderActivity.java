@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,9 +13,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -23,6 +35,7 @@ public class ConfirmOrderActivity extends ActionBarActivity {
     private Order new_order;
     private ListView orderItemsListView;
     private OrderArrayAdapter orderItemsArrayAdapter;
+    private String[] res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +45,101 @@ public class ConfirmOrderActivity extends ActionBarActivity {
         ArrayList<Item> items = (ArrayList<Item>) getIntent().getSerializableExtra("items");
         ArrayList<Integer> quantities = (ArrayList<Integer>) getIntent().getSerializableExtra("quantities");
         new_order.getSelectedItemsInOrder(items, quantities);
-
+        String total = getIntent().getStringExtra("total");
+        new_order.total = Float.parseFloat(total);
         orderItemsListView = (ListView) findViewById(R.id.orderItemsListView);
-        TextView total = (TextView) findViewById(R.id.totalOrder);
-        total.setText("Total:   Bs. " + getIntent().getStringExtra("total"));
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        TextView totalView = (TextView) findViewById(R.id.totalOrder);
+        totalView.setText("Total:   Bs. " + total);
+        res = getIntent().getStringArrayExtra("qr");
 
         orderItemsArrayAdapter = new OrderArrayAdapter(this, new_order);
         orderItemsListView.setAdapter(orderItemsArrayAdapter);
     }
 
     public void goToGetPersonalData(View view){
-        /*Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
-        ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
-        intent.putExtra("items",items);
-        intent.putExtra("quantities",quantities);
-        intent.putExtra("total",totalTextView.getText().toString());
-        startActivity(intent);*/
-        Log.d("Confirmar","Si");
+        HttpAsyncTask task = new HttpAsyncTask();
+        task.execute();
+    }
+
+    private class HttpAsyncTask extends AsyncTask<Void,Void,Boolean> {
+        String email;
+        String password;
+        String password_confirmation;
+        String id;
+
+        @Override
+        protected Boolean doInBackground(Void... params){
+            InputStream inputStream = null;
+            String result = "";
+            String order_id;
+            //aca empieza el codigo para guardar una orden
+            String url = "https://yomeseroapi.herokuapp.com/create_pedido_json?consumo="+Float.toString(new_order.total)+
+                    "&rest="+res[1]+"&mesa="+res[2];
+
+            //url = url.replaceAll(".","_");
+            url = url.replaceAll(" ","%20");
+            Log.d("url",url);
+            try{
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
+                inputStream = httpResponse.getEntity().getContent();
+            }catch(Exception e){
+                Log.d("exception: ",e.toString());
+                return false;
+            }
+            try {
+                result = convertInputStreamToString(inputStream);
+            }catch (Exception e){
+                Log.d("exception: ",e.toString());
+                return false;
+            }
+            try{
+                JSONObject obj = new JSONObject(result);
+                order_id = obj.getString("id");
+            }catch(Throwable t){
+                Log.d("exception: ", t.toString());
+                return false;
+            }
+            //aca empieza a guardar los items de la orden
+            Log.d("url",order_id);
+            Log.d("exception",order_id);
+            for (int i=0;i<new_order.items.size();i++) {
+                url = "https://yomeseroapi.herokuapp.com/create_item_pedido_json?pedido=" + order_id + "&quantity="
+                        + new_order.quantities.get(i) + "&item=" + new_order.items.get(i).id;
+                //url = url.replaceAll(".","_");
+                url = url.replaceAll(" ","%20");
+                Log.d("url",url);
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
+                } catch (Exception e) {
+                    Log.d("Exception: ", e.toString());
+                    return  false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success){
+            Log.d("Esta en post execute: ", "Siii");
+            if (success){
+                Intent intent = new Intent(getApplicationContext(), OrderView.class);
+                intent.putExtra("order", new_order);
+                intent.putExtra("qr", res);
+                startActivity(intent);
+            }
+        }
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line="";
+        String result = "";
+        while ((line = bufferedReader.readLine())!=null)
+            result+=line;
+        inputStream.close();
+        return result;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package android.hmkcode.com.yomeseroclientes;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,12 +61,27 @@ public class DisplayMenuActivity extends ActionBarActivity {
     }
 
     public void goToConfirmOrder(View view){
-        Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
-        ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
-        intent.putExtra("items",items);
-        intent.putExtra("quantities",quantities);
-        intent.putExtra("total",totalTextView.getText().toString());
-        startActivity(intent);
+        if(totalTextView.getText().equals("0.0") || totalTextView.getText().equals("0")){
+            AlertDialog alertDialog = new AlertDialog.Builder(DisplayMenuActivity.this).create();
+            alertDialog.setTitle("No puede continuar");
+            alertDialog.setMessage("Debe agregar items del menú para poder continuar con su pedido");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
+            ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
+            intent.putExtra("items",items);
+            intent.putExtra("quantities",quantities);
+            intent.putExtra("total",totalTextView.getText().toString());
+            intent.putExtra("qr",res);
+            startActivity(intent);
+        }
     }
 
     public static String GET(String url){
@@ -128,6 +145,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                         intent.putExtra("description", items.get(position).item_description);
                         intent.putExtra("price", items.get(position).item_price);
                         intent.putExtra("time", items.get(position).item_time);
+                        intent.putExtra("image", items.get(position).item_image);
                         startActivity(intent);
                     }
                 });
