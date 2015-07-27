@@ -18,8 +18,6 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
     private final Context context;
     private float total;
     private ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> descriptions = new ArrayList<>();
     public ArrayList<Integer> quantities = new ArrayList<>();
     private TextView totalTextView;
 
@@ -30,8 +28,6 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         total = 0;
         this.totalTextView = totalTextView;
         for (int i = 0; i < items.size(); i++) {
-            names.add("Nombre: "+items.get(i).item_name);
-            descriptions.add("Tipo: "+items.get(i).item_type+" - Precio: Bs. "+items.get(i).item_price);
             quantities.add(0);
         }
     }
@@ -44,8 +40,10 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         View rowView = inflater.inflate(R.layout.item_list, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.firstLine);
         TextView textView2 = (TextView) rowView.findViewById(R.id.secondLine);
-        textView.setText(names.get(position));
-        textView2.setText(descriptions.get(position));
+        TextView textView3 = (TextView) rowView.findViewById(R.id.thirdline);
+        textView.setText(items.get(position).item_name);
+        textView2.setText(items.get(position).item_type);
+        textView3.setText(Float.toString(items.get(position).item_price));
         TextView quantity = (TextView)rowView.findViewById(R.id.quantity);
         Button plus = (Button) rowView.findViewById(R.id.plusbutton);
         Button minus = (Button) rowView.findViewById(R.id.minusbutton);

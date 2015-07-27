@@ -27,7 +27,7 @@
         android:text="Total Bs."
         android:gravity="center"
         android:id="@+id/totalOrder"
-        android:textColor="@android:color/black"
+        android:textColor="#32495A"
         android:textSize="25sp"
         android:layout_marginBottom="5dp"
         android:layout_alignParentTop="true"
