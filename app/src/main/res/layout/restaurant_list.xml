@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:padding="6dip"
+    android:id="@+id/itemlistRest" >
+
+    <ImageView
+        android:id="@+id/iconRest"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:contentDescription="TODO"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@+id/firstLineRest"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/thirdLineRest"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:textSize="12sp"
+        android:layout_below="@+id/secondLineRest"
+        android:layout_alignLeft="@+id/secondLineRest"
+        android:layout_alignStart="@+id/secondLineRest" />
+
+    <TextView
+        android:id="@+id/firstLineRest"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="center"
+        android:text="Example application"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/secondLineRest"
+        />
+
+    <TextView
+        android:id="@+id/secondLineRest"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/fourthLineRest"
+        android:layout_alignStart="@+id/fourthLineRest" />
+
+    <TextView
+        android:id="@+id/fourthLineRest"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:layout_toRightOf="@id/iconRest"
+        android:textSize="12sp"
+        android:layout_below="@+id/thirdLineRest"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
