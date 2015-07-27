@@ -113,7 +113,7 @@ public class RegisterActivity extends ActionBarActivity {
         protected Boolean doInBackground(Void... params){
             InputStream inputStream = null;
             String result="";
-            String url = "https://frozen-springs-8168.herokuapp.com/register_user?email="+email+"&password="+password+"&password_confirmation="+password_confirmation;
+            String url = "https://yomeseroapi.herokuapp.com/register_user?email="+email+"&password="+password+"&password_confirmation="+password_confirmation;
             try{
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
