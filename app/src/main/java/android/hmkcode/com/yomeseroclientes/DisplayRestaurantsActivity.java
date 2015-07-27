@@ -140,7 +140,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
 
 
         if (id == R.id.action_log_out){
-            SaveSharedPreference.setUserName(DisplayRestaurantsActivity.this, "");
+            SaveSharedPreference.setUserId(DisplayRestaurantsActivity.this, "");
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

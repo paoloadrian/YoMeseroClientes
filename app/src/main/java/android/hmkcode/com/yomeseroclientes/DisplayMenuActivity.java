@@ -155,7 +155,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
 
         if (id == R.id.action_log_out){
-            SaveSharedPreference.setUserName(DisplayMenuActivity.this,"");
+            SaveSharedPreference.setUserId(DisplayMenuActivity.this,"");
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

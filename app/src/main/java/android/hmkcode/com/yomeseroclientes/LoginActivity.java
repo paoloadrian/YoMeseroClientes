@@ -54,7 +54,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             "foo@example.com:hello", "bar@example.com:world"
     };
 
-    public static String username;
+    public static String id;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -72,7 +72,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (SaveSharedPreference.getUserName(LoginActivity.this).length()!=0){
+        if (SaveSharedPreference.getUserId(LoginActivity.this).length()!=0){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
             finish();
@@ -203,7 +203,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 7;
     }
 
     /**
@@ -368,7 +368,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     Log.d("Valor leido", "No inicio sesion");
                     return false;
                 }else {
-                    username = obj.getString("email");
+                    id = obj.getString("email");
                     Log.d("Valor leido", obj.toString());
                     return true;
                 }
@@ -384,8 +384,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                SaveSharedPreference.setUserName(LoginActivity.this,username);
-                Log.d("USUARIO: ",username);
+                SaveSharedPreference.setUserId(LoginActivity.this,id);
+                Log.d("USUARIO: ",id);
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();

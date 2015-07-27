@@ -124,7 +124,7 @@ public class RegisterActivity extends ActionBarActivity {
         protected void onPostExecute(final Boolean success){
             Log.d("Esta en post execute: ", "Siii");
             if (success){
-                SaveSharedPreference.setUserName(RegisterActivity.this, email);
+                SaveSharedPreference.setUserId(RegisterActivity.this, email);
                 Log.d("Usuario: ", email);
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
