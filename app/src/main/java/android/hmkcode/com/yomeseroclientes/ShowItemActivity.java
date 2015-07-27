@@ -1,6 +1,7 @@
 package android.hmkcode.com.yomeseroclientes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -54,8 +55,12 @@ public class ShowItemActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_log_out){
+            SaveSharedPreference.setUserName(ShowItemActivity.this,"");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
