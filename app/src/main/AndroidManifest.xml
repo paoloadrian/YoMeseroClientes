@@ -53,15 +53,27 @@
         </activity>
         <activity
             android:name=".ShowItemActivity"
-            android:label="@string/title_activity_show_item" >
+            android:label="@string/title_activity_show_item"
+            android:parentActivityName=".DisplayMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayMenuActivity" />
         </activity>
         <activity
             android:name=".ShowRestaurantActivity"
-            android:label="@string/title_activity_show_restaurant" >
+            android:label="@string/title_activity_show_restaurant"
+            android:parentActivityName=".DisplayRestaurantsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayRestaurantsActivity" />
         </activity>
         <activity
             android:name=".ConfirmOrderActivity"
-            android:label="@string/title_activity_confirm_order" >
+            android:label="@string/title_activity_confirm_order"
+            android:parentActivityName=".DisplayMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayMenuActivity" />
         </activity>
         <activity
             android:name=".SimpleScannerActivity"

@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
 
         if (id == R.id.action_log_out){
-            SaveSharedPreference.setUserName(MainActivity.this,"");
+            SaveSharedPreference.setUserId(MainActivity.this,"");
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(intent);
             finish();
