@@ -39,7 +39,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
     TextView totalTextView;
     ArrayList<Item> items;
     ItemsArrayAdapter itemsArrayAdapter;
-
+    TextView resTextView;
+    String[] res;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +48,14 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
         itemsListView = (ListView) findViewById(R.id.itemsListView);
         totalTextView = (TextView) findViewById(R.id.total);
+        resTextView = (TextView) findViewById(R.id.textRes);
+        res = getIntent().getStringExtra("Resultado").split(" ");
+        resTextView.setText(res[0]);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/items.json");
+        new HttpAsyncTask(this).execute("https://yomeseroapi.herokuapp.com/items.json");
     }
 
     public void goToConfirmOrder(View view){
@@ -109,7 +113,9 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 for (int i = 0; i < json_items.length(); i++) {
                     aux = new Item();
                     aux.parseFromJson(json_items.getJSONObject(i));
-                    items.add(aux);
+                    if(Integer.parseInt(res[1])==aux.restaurant_id){
+                        items.add(aux);
+                    }
                 }
                 itemsArrayAdapter = new ItemsArrayAdapter(context,items,totalTextView);
                 itemsListView.setAdapter(itemsArrayAdapter);
