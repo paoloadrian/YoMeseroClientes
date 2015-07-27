@@ -368,7 +368,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     Log.d("Valor leido", "No inicio sesion");
                     return false;
                 }else {
-                    id = obj.getString("email");
+                    id = obj.getString("id");
                     Log.d("Valor leido", obj.toString());
                     return true;
                 }
