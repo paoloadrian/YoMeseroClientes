@@ -19,6 +19,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class RegisterActivity extends ActionBarActivity {
@@ -93,6 +99,7 @@ public class RegisterActivity extends ActionBarActivity {
         String email;
         String password;
         String password_confirmation;
+        String id;
 
         @Override
         protected void onPreExecute() {
@@ -108,15 +115,31 @@ public class RegisterActivity extends ActionBarActivity {
 
         @Override
         protected Boolean doInBackground(Void... params){
-
+            InputStream inputStream = null;
+            String result="";
             String url = "https://frozen-springs-8168.herokuapp.com/register_user?email="+email+"&password="+password+"&password_confirmation="+password_confirmation;
             try{
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
-
+                    inputStream = httpResponse.getEntity().getContent();
             }catch(Exception e){
                 return false;
             }
+
+            try {
+                result = convertInputStreamToString(inputStream);
+            }catch (Exception e){
+                result = "Did not work";
+                return false;
+            }
+
+            try{
+                JSONObject obj = new JSONObject(result);
+                id = obj.getString("id");
+            }catch(Throwable t){
+                return false;
+            }
+
             return true;
         }
 
@@ -124,14 +147,24 @@ public class RegisterActivity extends ActionBarActivity {
         protected void onPostExecute(final Boolean success){
             Log.d("Esta en post execute: ", "Siii");
             if (success){
-                SaveSharedPreference.setUserId(RegisterActivity.this, email);
-                Log.d("Usuario: ", email);
+                SaveSharedPreference.setUserId(RegisterActivity.this, id);
+                Log.d("Usuario: ", id);
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
         }
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line="";
+        String result = "";
+        while ((line = bufferedReader.readLine())!=null)
+            result+=line;
+        inputStream.close();
+        return result;
     }
 
 }
