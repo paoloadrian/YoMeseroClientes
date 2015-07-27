@@ -17,9 +17,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
     }
 
 
@@ -56,6 +53,11 @@ public class MainActivity extends ActionBarActivity {
 
     public void openRestaurants(View view){
         Intent intent = new Intent(this,DisplayRestaurantsActivity.class);
+        startActivity(intent);
+    }
+
+    public void scanCode(View view){
+        Intent intent = new Intent(getApplicationContext(),SimpleScannerActivity.class);
         startActivity(intent);
     }
 }

@@ -51,9 +51,6 @@ public class DisplayMenuActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
         new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/items.json");
     }
 

@@ -40,9 +40,6 @@ public class ConfirmOrderActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
         orderItemsArrayAdapter = new OrderArrayAdapter(this, new_order);
         orderItemsListView.setAdapter(orderItemsArrayAdapter);
         context = this;

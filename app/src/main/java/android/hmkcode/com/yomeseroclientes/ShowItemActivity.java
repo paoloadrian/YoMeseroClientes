@@ -23,9 +23,6 @@ public class ShowItemActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
         TextView name = (TextView) findViewById(R.id.item_name);
         TextView description = (TextView) findViewById(R.id.item_description);
         TextView type = (TextView) findViewById(R.id.item_type);
