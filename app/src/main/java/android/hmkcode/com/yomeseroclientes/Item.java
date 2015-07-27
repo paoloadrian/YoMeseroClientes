@@ -4,11 +4,13 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.Serializable;
 
 /**
  * Created by alex on 4/11/15.
  */
-public class Item {
+public class Item implements Serializable {
+    public int id;
     public String item_name;
     public String item_description;
     public String item_type;
@@ -46,6 +48,7 @@ public class Item {
 
     public void parseFromJson(JSONObject json){
         try {
+            id = Integer.parseInt(json.getString("id"));
             item_name = json.getString("item_name");
             item_description = json.getString("item_description");
             item_type = json.getString("item_type");

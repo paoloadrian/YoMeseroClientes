@@ -14,7 +14,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -31,8 +35,10 @@ import java.util.ArrayList;
 
 
 public class DisplayMenuActivity extends ActionBarActivity {
-
     ListView itemsListView;
+    TextView totalTextView;
+    ArrayList<Item> items;
+    ItemsArrayAdapter itemsArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         setContentView(R.layout.activity_display_menu);
 
         itemsListView = (ListView) findViewById(R.id.itemsListView);
+        totalTextView = (TextView) findViewById(R.id.total);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -48,6 +55,15 @@ public class DisplayMenuActivity extends ActionBarActivity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
 
         new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/items.json");
+    }
+
+    public void goToConfirmOrder(View view){
+        Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
+        ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
+        intent.putExtra("items",items);
+        intent.putExtra("quantities",quantities);
+        intent.putExtra("total",totalTextView.getText().toString());
+        startActivity(intent);
     }
 
     public static String GET(String url){
@@ -78,15 +94,6 @@ public class DisplayMenuActivity extends ActionBarActivity {
         return result;
     }
 
-    public Boolean isConnected(){
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo!=null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
-    }
-
     private class HttpAsyncTask extends AsyncTask<String,Void,String> {
         private Context context;
         public HttpAsyncTask(Context context){
@@ -100,16 +107,28 @@ public class DisplayMenuActivity extends ActionBarActivity {
         protected void onPostExecute(String result){
             try {
                 JSONArray json_items = new JSONArray(result);
-                ArrayList<Item> items = new ArrayList<>();
+                items = new ArrayList<>();
                 Item aux;
                 for (int i = 0; i < json_items.length(); i++) {
                     aux = new Item();
                     aux.parseFromJson(json_items.getJSONObject(i));
                     items.add(aux);
                 }
-
-                ItemsArrayAdapter itemsArrayAdapter = new ItemsArrayAdapter(context,items);
+                itemsArrayAdapter = new ItemsArrayAdapter(context,items,totalTextView);
                 itemsListView.setAdapter(itemsArrayAdapter);
+                itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(context, ShowItemActivity.class);
+                        intent.putExtra("name", items.get(position).item_name);
+                        intent.putExtra("type", items.get(position).item_type);
+                        intent.putExtra("description", items.get(position).item_description);
+                        intent.putExtra("price", items.get(position).item_price);
+                        intent.putExtra("time", items.get(position).item_time);
+                        startActivity(intent);
+                    }
+                });
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -120,6 +139,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_display_menu, menu);
         return true;
     }
@@ -132,6 +152,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
 
         if (id == R.id.action_log_out){
             SaveSharedPreference.setUserName(DisplayMenuActivity.this,"");

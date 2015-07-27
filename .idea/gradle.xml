@@ -6,7 +6,10 @@
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1" />
+<<<<<<< HEAD
         <option name="gradleJvm" value="1.8" />
+=======
+>>>>>>> bc77f959a7d02f69df47fcd1c425914340c6d318
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -16,4 +19,9 @@
       </GradleProjectSettings>
     </option>
   </component>
+<<<<<<< HEAD
 </project>
+=======
+</project>
+
+>>>>>>> bc77f959a7d02f69df47fcd1c425914340c6d318

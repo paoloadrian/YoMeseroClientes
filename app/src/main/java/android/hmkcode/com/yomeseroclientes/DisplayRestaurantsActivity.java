@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -78,15 +80,6 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         return result;
     }
 
-    public Boolean isConnected(){
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo!=null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
-    }
-
     private class HttpAsyncTask extends AsyncTask<String,Void,String> {
         private Context context;
         public HttpAsyncTask(Context context){
@@ -100,7 +93,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         protected void onPostExecute(String result){
             try {
                 JSONArray json_restaurants = new JSONArray(result);
-                ArrayList<Restaurant> restaurants = new ArrayList<>();
+                final ArrayList<Restaurant> restaurants = new ArrayList<>();
                 Restaurant aux;
                 for (int i = 0; i < json_restaurants.length(); i++) {
                     aux = new Restaurant();
@@ -110,6 +103,19 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
 
                 RestaurantsArrayAdapter itemsArrayAdapter = new RestaurantsArrayAdapter(context,restaurants);
                 restaurantsListView.setAdapter(itemsArrayAdapter);
+
+                restaurantsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(context, ShowRestaurantActivity.class);
+                        intent.putExtra("name", restaurants.get(position).restaurant_name);
+                        intent.putExtra("type", restaurants.get(position).restaurant_type);
+                        intent.putExtra("description", restaurants.get(position).restaurant_description);
+                        intent.putExtra("address", restaurants.get(position).restaurant_address);
+                        intent.putExtra("phone", restaurants.get(position).restaurant_phone);
+                        startActivity(intent);
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -121,6 +127,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_display_restaurants, menu);
+
         return true;
     }
 

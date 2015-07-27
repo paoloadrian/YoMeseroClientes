@@ -33,7 +33,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +55,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     };
 
     public static String username;
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -105,6 +105,32 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mProgressView = findViewById(R.id.login_progress);
         }
 
+        // Set up the login form.
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        populateAutoComplete();
+
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
+
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
     }
 
     private void populateAutoComplete() {
@@ -215,6 +241,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
@@ -349,7 +376,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 Log.d("Valor leido", "No se pudo");
                 return false;
             }
-            //return true;
         }
 
         @Override
