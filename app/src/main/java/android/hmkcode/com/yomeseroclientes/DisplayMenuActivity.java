@@ -35,8 +35,8 @@ import java.util.ArrayList;
 
 
 public class DisplayMenuActivity extends ActionBarActivity {
-
     ListView itemsListView;
+    TextView totalTextView;
     ArrayList<Item> items;
     ItemsArrayAdapter itemsArrayAdapter;
 
@@ -46,6 +46,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         setContentView(R.layout.activity_display_menu);
 
         itemsListView = (ListView) findViewById(R.id.itemsListView);
+        totalTextView = (TextView) findViewById(R.id.total);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -61,22 +62,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
         ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
         intent.putExtra("items",items);
         intent.putExtra("quantities",quantities);
+        intent.putExtra("total",totalTextView.getText().toString());
         startActivity(intent);
-    }
-
-    public ArrayList<Integer> getQuantities(){
-        ArrayList<Integer> quantities = new ArrayList<>();
-        View item_view;
-        TextView item_quantity;
-        int aux;
-        Log.d("Items",Integer.toString(itemsListView.getCount()));
-        for (int i = 0;i < itemsListView.getCount(); i++){
-            item_view = itemsListView.getChildAt(i);
-            item_quantity = (TextView) item_view.findViewById(R.id.quantity);
-            aux = Integer.parseInt(item_quantity.getText().toString());
-            quantities.add(aux);
-        }
-        return quantities;
     }
 
     public static String GET(String url){
@@ -128,7 +115,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                     items.add(aux);
                 }
 
-                itemsArrayAdapter = new ItemsArrayAdapter(context,items);
+                itemsArrayAdapter = new ItemsArrayAdapter(context,items,totalTextView);
                 itemsListView.setAdapter(itemsArrayAdapter);
                 itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

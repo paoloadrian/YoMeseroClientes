@@ -7,52 +7,39 @@
     android:orientation="vertical"
     tools:context="android.hmkcode.com.yomeseroclientes.ConfirmOrderActivity">
 
-    <TextView
-        android:id="@+id/item_name"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="Item Name" />
-
-    <ImageView
-        android:id="@+id/iconRest"
-        android:gravity="center"
-        android:layout_width="178dp"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.14" />
+        android:text="Confirmar Pedido"
+        android:textAllCaps="false"
+        android:onClick="goToGetPersonalData"
+        android:layout_margin="5dip"
+        android:textColor="@android:color/white"
+        android:background="#59B66C"
+        android:textSize="20sp"
+        android:id="@+id/confirmButton"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/item_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Bs."
         android:gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Type"
-        android:textSize="12sp" />
+        android:id="@+id/totalOrder"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/item_description"
-        android:gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/item_info"
-        android:gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Price and time"
-        android:textSize="12sp" />
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/orderItemsListView"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/relativeLayout" />
 </LinearLayout>
