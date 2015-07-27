@@ -4,7 +4,6 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 
 /**
@@ -17,7 +16,8 @@ public class Item implements Serializable {
     public String item_type;
     public int item_time;
     public float item_price;
-    public int cant = 0;
+    public String item_image;
+    public int restaurant_id;
 
     public String toJSON(){
         try {
@@ -27,6 +27,8 @@ public class Item implements Serializable {
             jsonObject.put("item_type", item_type);
             jsonObject.put("item_time", item_time);
             jsonObject.put("item_price", item_price);
+            jsonObject.put("item_image", item_image);
+            jsonObject.put("restaurant_id", restaurant_id);
             return jsonObject.toString();
         }catch(Exception e){
             Log.d("InputStream", e.getLocalizedMessage());
@@ -41,6 +43,9 @@ public class Item implements Serializable {
             item_type = jsonObject.getString("item_type");
             item_time = Integer.parseInt(jsonObject.getString("item_time"));
             item_price = Float.parseFloat(jsonObject.getString("item_price"));
+            item_image = jsonObject.getString("item_image");
+            restaurant_id = Integer.parseInt(jsonObject.getString("restaurant_id"));
+
             return show();
         }catch(Exception e){
             Log.d("InputStream", e.getLocalizedMessage());
@@ -56,6 +61,8 @@ public class Item implements Serializable {
             item_type = json.getString("item_type");
             item_time = Integer.parseInt(json.getString("item_time"));
             item_price = Float.parseFloat(json.getString("item_price"));
+            item_image = json.getString("item_image");
+            restaurant_id = Integer.parseInt(json.getString("restaurant_id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -66,6 +73,7 @@ public class Item implements Serializable {
         result += item_name;
         result += "\n";
         result += item_description;
+        result += item_image;
         return result;
     }
 

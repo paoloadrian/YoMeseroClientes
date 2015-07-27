@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -15,14 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".MainActivity" >
         </activity>
         <activity
             android:name=".DisplayMenuActivity"
@@ -42,20 +35,49 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.LoginActivity" />
         </activity>
         <activity
             android:name=".ShowItemActivity"
-            android:label="@string/title_activity_show_item" >
+            android:label="@string/title_activity_show_item"
+            android:parentActivityName=".DisplayMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayMenuActivity" />
         </activity>
         <activity
             android:name=".ShowRestaurantActivity"
-            android:label="@string/title_activity_show_restaurant" >
+            android:label="@string/title_activity_show_restaurant"
+            android:parentActivityName=".DisplayRestaurantsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayRestaurantsActivity" />
         </activity>
         <activity
             android:name=".ConfirmOrderActivity"
-            android:label="@string/title_activity_confirm_order" >
+            android:label="@string/title_activity_confirm_order"
+            android:parentActivityName=".DisplayMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.DisplayMenuActivity" />
+        </activity>
+        <activity
+            android:name=".SimpleScannerActivity"
+            android:label="@string/title_activity_simple_scanner" >
         </activity>
     </application>
 

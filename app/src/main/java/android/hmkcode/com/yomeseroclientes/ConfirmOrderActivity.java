@@ -40,24 +40,8 @@ public class ConfirmOrderActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
         orderItemsArrayAdapter = new OrderArrayAdapter(this, new_order);
         orderItemsListView.setAdapter(orderItemsArrayAdapter);
-        context = this;
-        orderItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, ShowItemActivity.class);
-                intent.putExtra("name", new_order.items.get(position).item_name);
-                intent.putExtra("type", new_order.items.get(position).item_type);
-                intent.putExtra("description", new_order.items.get(position).item_description);
-                intent.putExtra("price", new_order.items.get(position).item_price);
-                intent.putExtra("time", new_order.items.get(position).item_time);
-                startActivity(intent);
-            }
-        });
     }
 
     public void goToGetPersonalData(View view){
@@ -85,8 +69,12 @@ public class ConfirmOrderActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_log_out) {
+            SaveSharedPreference.setUserId(ConfirmOrderActivity.this,"");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

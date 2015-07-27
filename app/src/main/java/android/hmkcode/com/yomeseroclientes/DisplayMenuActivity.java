@@ -39,7 +39,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
     TextView totalTextView;
     ArrayList<Item> items;
     ItemsArrayAdapter itemsArrayAdapter;
-
+    TextView resTextView;
+    String[] res;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +48,14 @@ public class DisplayMenuActivity extends ActionBarActivity {
 
         itemsListView = (ListView) findViewById(R.id.itemsListView);
         totalTextView = (TextView) findViewById(R.id.total);
+        resTextView = (TextView) findViewById(R.id.textRes);
+        res = getIntent().getStringArrayExtra("Resultado");
+        resTextView.setText(res[0]);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
-        new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/items.json");
+        new HttpAsyncTask(this).execute("https://yomeseroapi.herokuapp.com/items.json");
     }
 
     public void goToConfirmOrder(View view){
@@ -112,9 +113,10 @@ public class DisplayMenuActivity extends ActionBarActivity {
                 for (int i = 0; i < json_items.length(); i++) {
                     aux = new Item();
                     aux.parseFromJson(json_items.getJSONObject(i));
-                    items.add(aux);
+                    if(Integer.parseInt(res[1])==aux.restaurant_id){
+                        items.add(aux);
+                    }
                 }
-
                 itemsArrayAdapter = new ItemsArrayAdapter(context,items,totalTextView);
                 itemsListView.setAdapter(itemsArrayAdapter);
                 itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,6 +131,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                         startActivity(intent);
                     }
                 });
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -139,7 +142,8 @@ public class DisplayMenuActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        getMenuInflater().inflate(R.menu.menu_display_menu, menu);
         return true;
     }
 
@@ -151,8 +155,14 @@ public class DisplayMenuActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+
+        if (id == R.id.action_log_out){
+            SaveSharedPreference.setUserId(DisplayMenuActivity.this,"");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

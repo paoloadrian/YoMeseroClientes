@@ -17,9 +17,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
     }
 
 
@@ -38,8 +35,12 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        if (id == R.id.action_log_out){
+            SaveSharedPreference.setUserId(MainActivity.this,"");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -55,9 +56,8 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void openLogin(View view){
-        Intent intent = new Intent(this,LoginActivity.class);
+    public void scanCode(View view){
+        Intent intent = new Intent(getApplicationContext(),SimpleScannerActivity.class);
         startActivity(intent);
     }
-
 }

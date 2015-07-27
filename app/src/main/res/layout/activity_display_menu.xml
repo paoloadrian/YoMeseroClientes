@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Lista de Items"
+        android:text="Restaurante"
         android:gravity="center"
-        android:id="@+id/textView"
-        android:textColor="@android:color/black"
+        android:id="@+id/textRes"
+        android:textColor="#405161"
         android:textSize="25sp"
         android:layout_marginBottom="5sp"
         android:layout_alignParentTop="true"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/itemsListView"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textRes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/relativeLayout" />
@@ -34,10 +34,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout"
         android:layout_marginTop="5sp"
-        android:layout_alignParentBottom="true"
         android:background="#078673"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="match_parent"
@@ -46,7 +48,7 @@
             android:text="Total:   Bs. "
             android:id="@+id/textView2"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:gravity="right"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/continuebutton"
@@ -60,11 +62,11 @@
             android:text="0"
             android:id="@+id/total"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"  />
+            android:layout_alignParentEnd="true" />
 
         <Button
             android:layout_width="80dp"
@@ -75,10 +77,11 @@
             android:layout_margin="5dp"
             android:textColor="#23355B"
             android:background="#C4C8C3"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:id="@+id/continuebutton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/total" />
     </RelativeLayout>
+
 </RelativeLayout>

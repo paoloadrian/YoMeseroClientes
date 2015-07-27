@@ -1,5 +1,6 @@
 package android.hmkcode.com.yomeseroclientes;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -18,9 +19,6 @@ public class ShowRestaurantActivity extends ActionBarActivity {
         setContentView(R.layout.activity_show_restaurant);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
 
         TextView name = (TextView) findViewById(R.id.restaurant_name);
         TextView description = (TextView) findViewById(R.id.restaurant_description);
@@ -50,8 +48,12 @@ public class ShowRestaurantActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_log_out){
+            SaveSharedPreference.setUserId(ShowRestaurantActivity.this,"");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

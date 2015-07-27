@@ -46,10 +46,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#078673")));
-
-        new HttpAsyncTask(this).execute("https://frozen-springs-8168.herokuapp.com/restaurants.json");
+        new HttpAsyncTask(this).execute("https://yomeseroapi.herokuapp.com/restaurants.json");
     }
 
     public static String GET(String url){
@@ -103,6 +100,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
 
                 RestaurantsArrayAdapter itemsArrayAdapter = new RestaurantsArrayAdapter(context,restaurants);
                 restaurantsListView.setAdapter(itemsArrayAdapter);
+
                 restaurantsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,7 +123,8 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_display_restaurants, menu);
+
         return true;
     }
 
@@ -136,9 +135,13 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        if (id == R.id.action_log_out){
+            SaveSharedPreference.setUserId(DisplayRestaurantsActivity.this, "");
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

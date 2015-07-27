@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_register_email">Correo electrónico</string>
+    <string name="prompt_register_password">Contraseña</string>
+    <string name="prompt_register_password_confirmation">Confirmar contraseña</string>
+</resources>
