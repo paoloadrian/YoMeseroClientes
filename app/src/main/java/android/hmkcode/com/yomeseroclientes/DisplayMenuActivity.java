@@ -49,7 +49,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         itemsListView = (ListView) findViewById(R.id.itemsListView);
         totalTextView = (TextView) findViewById(R.id.total);
         resTextView = (TextView) findViewById(R.id.textRes);
-        res = getIntent().getStringExtra("Resultado").split(" ");
+        res = getIntent().getStringArrayExtra("Resultado");
         resTextView.setText(res[0]);
 
         ActionBar actionBar = getSupportActionBar();
