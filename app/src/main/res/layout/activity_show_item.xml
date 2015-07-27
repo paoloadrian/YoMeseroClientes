@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/item_name"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:gravity="center"
         android:textSize="20sp"
@@ -21,7 +21,7 @@
         android:id="@+id/iconRest"
         android:gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:src="@mipmap/ic_launcher"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp" />

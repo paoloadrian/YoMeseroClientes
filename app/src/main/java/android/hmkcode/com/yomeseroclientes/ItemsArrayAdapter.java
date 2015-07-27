@@ -1,6 +1,7 @@
 package android.hmkcode.com.yomeseroclientes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -88,7 +89,6 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
             byte[] decodedByte = Base64.decode(items.get(position).item_image, 0);
             Bitmap bm = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
             Drawable img_drawable = new BitmapDrawable(context.getResources(), bm);
-
             imageView.setImageDrawable(img_drawable);
         }
 

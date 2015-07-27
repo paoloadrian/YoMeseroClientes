@@ -128,6 +128,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                         intent.putExtra("description", items.get(position).item_description);
                         intent.putExtra("price", items.get(position).item_price);
                         intent.putExtra("time", items.get(position).item_time);
+                        intent.putExtra("image", items.get(position).item_image);
                         startActivity(intent);
                     }
                 });
