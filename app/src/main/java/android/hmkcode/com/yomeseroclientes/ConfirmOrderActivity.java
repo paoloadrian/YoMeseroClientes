@@ -73,7 +73,7 @@ public class ConfirmOrderActivity extends ActionBarActivity {
             String result = "";
             String order_id;
             //aca empieza el codigo para guardar una orden
-            String url = "https://yomeseroapi.herokuapp.com/create_pedido_json?consumo="+Float.toString(new_order.total)+
+            String url = "https://yomeseroserver.herokuapp.com/create_pedido_json?consumo="+Float.toString(new_order.total)+
                     "&rest="+res[1]+"&mesa="+res[2];
 
             //url = url.replaceAll(".","_");
@@ -104,7 +104,7 @@ public class ConfirmOrderActivity extends ActionBarActivity {
             Log.d("url",order_id);
             Log.d("exception",order_id);
             for (int i=0;i<new_order.items.size();i++) {
-                url = "https://yomeseroapi.herokuapp.com/create_item_pedido_json?pedido=" + order_id + "&quantity="
+                url = "https://yomeseroserver.herokuapp.com/create_item_pedido_json?pedido=" + order_id + "&quantity="
                         + new_order.quantities.get(i) + "&item=" + new_order.items.get(i).id;
                 //url = url.replaceAll(".","_");
                 url = url.replaceAll(" ","%20");

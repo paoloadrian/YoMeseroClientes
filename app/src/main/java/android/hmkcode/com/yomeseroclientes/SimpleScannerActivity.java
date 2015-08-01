@@ -49,7 +49,7 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZXingSca
         else{
             AlertDialog alertDialog = new AlertDialog.Builder(SimpleScannerActivity.this).create();
             alertDialog.setTitle("Código QR inválido");
-            alertDialog.setMessage("El código QR escaneado es inválido, vuelva a escanear nuevamente el codigo QR");
+            alertDialog.setMessage("El código QR escaneado es inválido, vuelva a escanear el codigo QR");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

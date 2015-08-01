@@ -57,7 +57,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        new HttpAsyncTask(this).execute("https://yomeseroapi.herokuapp.com/items.json");
+        new HttpAsyncTask(this).execute("https://yomeseroserver.herokuapp.com/items.json");
     }
 
     public void goToConfirmOrder(View view){

@@ -46,7 +46,7 @@ public class DisplayRestaurantsActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        new HttpAsyncTask(this).execute("https://yomeseroapi.herokuapp.com/restaurants.json");
+        new HttpAsyncTask(this).execute("https://yomeseroserver.herokuapp.com/restaurants.json");
     }
 
     public static String GET(String url){
