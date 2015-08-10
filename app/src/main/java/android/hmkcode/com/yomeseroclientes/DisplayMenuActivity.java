@@ -51,7 +51,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         itemsListView = (ListView) findViewById(R.id.itemsListView);
         totalTextView = (TextView) findViewById(R.id.total);
         resTextView = (TextView) findViewById(R.id.textRes);
-        res = getIntent().getStringArrayExtra("Resultado");
+        res = getIntent().getStringArrayExtra("Resultado"); //contiene: nombreRest idRest mesa
         resTextView.setText(res[0]);
 
         ActionBar actionBar = getSupportActionBar();
@@ -75,9 +75,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
         }
         else{
             Intent intent = new Intent(getApplicationContext(), ConfirmOrderActivity.class);
-            ArrayList<Integer> quantities = itemsArrayAdapter.quantities;
             intent.putExtra("items",items);
-            intent.putExtra("quantities",quantities);
             intent.putExtra("total",totalTextView.getText().toString());
             intent.putExtra("qr",res);
             startActivity(intent);
@@ -140,12 +138,7 @@ public class DisplayMenuActivity extends ActionBarActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(context, ShowItemActivity.class);
-                        intent.putExtra("name", items.get(position).item_name);
-                        intent.putExtra("type", items.get(position).item_type);
-                        intent.putExtra("description", items.get(position).item_description);
-                        intent.putExtra("price", items.get(position).item_price);
-                        intent.putExtra("time", items.get(position).item_time);
-                        intent.putExtra("image", items.get(position).item_image);
+                        intent.putExtra("item", items.get(position));
                         startActivity(intent);
                     }
                 });

@@ -53,7 +53,7 @@
         </activity>
         <activity
             android:name=".ShowItemActivity"
-            android:label="@string/title_activity_show_item">
+            android:label="@string/title_activity_show_item" >
         </activity>
         <activity
             android:name=".ShowRestaurantActivity"
@@ -65,7 +65,7 @@
         </activity>
         <activity
             android:name=".ConfirmOrderActivity"
-            android:label="@string/title_activity_confirm_order">
+            android:label="@string/title_activity_confirm_order" >
         </activity>
         <activity
             android:name=".SimpleScannerActivity"
@@ -74,6 +74,14 @@
         <activity
             android:name=".OrderView"
             android:label="@string/title_activity_order_view" >
+        </activity>
+        <activity
+            android:name=".BillingActivity"
+            android:label="@string/title_activity_facturation"
+            android:parentActivityName=".ConfirmOrderActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.hmkcode.com.yomeseroclientes.ConfirmOrderActivity" />
         </activity>
     </application>
 

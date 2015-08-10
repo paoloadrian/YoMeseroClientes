@@ -13,5 +13,6 @@
     <string name="title_activity_confirm_order">Detalle del Pedido</string>
     <string name="title_activity_simple_scanner">Escanear código QR</string>
     <string name="title_activity_order_view">Mi pedido</string>
+    <string name="title_activity_facturation">Datos de Facturación</string>
 
 </resources>

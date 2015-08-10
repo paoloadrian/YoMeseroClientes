@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Order implements Serializable {
     public ArrayList<Item> items;
-    public ArrayList<Integer> quantities;
     public float total;
     public String state;
     public int id;
@@ -22,16 +21,14 @@ public class Order implements Serializable {
 
     public Order(){
         items = new ArrayList<>();
-        quantities = new ArrayList<>();
         total = 0;
         state = "Pendiente";
     }
 
-    public void getSelectedItemsInOrder(ArrayList<Item> items, ArrayList<Integer> quantities){
+    public void getSelectedItemsInOrder(ArrayList<Item> items){
         for(int i=0;i<items.size();i++){
-            if(quantities.get(i) > 0){
+            if(items.get(i).quantity > 0){
                 this.items.add(items.get(i));
-                this.quantities.add(quantities.get(i));
             }
         }
     }

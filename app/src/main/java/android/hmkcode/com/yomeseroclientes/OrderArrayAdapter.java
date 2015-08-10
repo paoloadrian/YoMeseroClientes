@@ -23,15 +23,11 @@ import java.util.ArrayList;
 public class OrderArrayAdapter extends ArrayAdapter<Item> {
     private final Context context;
     private ArrayList<Item> items = new ArrayList<>();
-    public ArrayList<String> quantities = new ArrayList<>();
 
     public OrderArrayAdapter(Context context, Order order) {
         super(context, R.layout.item_list, order.items);
         this.context = context;
         this.items = order.items;
-        for (int i = 0; i < order.quantities.size(); i++) {
-            this.quantities.add("Cantidad: "+Integer.toString(order.quantities.get(i)));
-        }
     }
 
     @Override
@@ -79,7 +75,7 @@ public class OrderArrayAdapter extends ArrayAdapter<Item> {
 
         textView3.setText(Float.toString(items.get(position).item_price));
         textView.setText(items.get(position).item_name);
-        textView2.setText(quantities.get(position));
+        textView2.setText(Integer.toString(items.get(position).quantity));
         // change the icon for Windows and iPhone
         return rowView;
     }

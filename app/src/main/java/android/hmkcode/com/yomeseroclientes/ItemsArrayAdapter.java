@@ -24,7 +24,6 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
     private final Context context;
     private float total;
     private ArrayList<Item> items = new ArrayList<>();
-    public ArrayList<Integer> quantities = new ArrayList<>();
     private TextView totalTextView;
 
     public ItemsArrayAdapter(Context context, ArrayList<Item> items, TextView totalTextView) {
@@ -33,9 +32,6 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         this.items = items;
         total = 0;
         this.totalTextView = totalTextView;
-        for (int i = 0; i < items.size(); i++) {
-            quantities.add(0);
-        }
     }
 
     @Override
@@ -92,7 +88,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
             imageView.setImageDrawable(img_drawable);
         }
 
-        quantity.setText(Integer.toString(quantities.get(position)));
+        quantity.setText(Integer.toString(items.get(position).quantity));
         // change the icon for Windows and iPhone
         return rowView;
     }
@@ -110,7 +106,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
         public void onClick(View v) {
             int quantity = Integer.parseInt(textView.getText().toString());
             if (v.getId() == R.id.plusbutton) {
-                quantities.set(position, quantities.get(position) + 1);
+                items.get(position).quantity += 1;
                 textView.setText(Integer.toString(quantity + 1));
                 total += items.get(position).item_price;
                 totalTextView.setText(Float.toString(total));
@@ -118,7 +114,7 @@ public class ItemsArrayAdapter extends ArrayAdapter<Item> {
             else {
                 if(quantity > 0) {
                     textView.setText(Integer.toString(quantity - 1));
-                    quantities.set(position, quantities.get(position) - 1);
+                    items.get(position).quantity -= 1;
                     total -= items.get(position).item_price;
                     totalTextView.setText(Float.toString(total));
                 }

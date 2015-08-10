@@ -18,6 +18,11 @@ public class Item implements Serializable {
     public float item_price;
     public String item_image;
     public int restaurant_id;
+    public int quantity;
+
+    public Item(){
+        quantity = 0;
+    }
 
     public String toJSON(){
         try {

@@ -27,43 +27,40 @@ public class ShowItemActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_item);
 
+        Item item = (Item) getIntent().getSerializableExtra("item");
+
         ImageView imageView = (ImageView) findViewById(R.id.iconRest);
         TextView name = (TextView) findViewById(R.id.item_name);
         TextView description = (TextView) findViewById(R.id.item_description);
         TextView type = (TextView) findViewById(R.id.item_type);
         TextView time = (TextView) findViewById(R.id.item_info);
 
-        String type1 = getIntent().getStringExtra("type");
-        float price = getIntent().getFloatExtra("price",0);
-
-        name.setText(getIntent().getStringExtra("name"));
-        description.setText(getIntent().getStringExtra("description"));
-        type.setText("Tipo: " + type1);
-        String last_line = "Precio: " + Float.toString(price);
-        last_line = last_line + "   Tiempo: " + getIntent().getIntExtra("time",0);
+        name.setText(item.item_name);
+        description.setText(item.item_description);
+        type.setText("Tipo: " + item.item_type);
+        String last_line = "Precio: " + Float.toString(item.item_price);
+        last_line = last_line + "   Tiempo: " + item.item_time;
         time.setText(last_line);
 
-        String image = getIntent().getStringExtra("image");
-
-        if (image.equals("no+image")){
-            if (type1.equals("Comida")){
-                if(price>20.0){
+        if (item.item_image.equals("no+image")){
+            if (item.item_type.equals("Comida")){
+                if(item.item_time>20.0){
                     imageView.setImageResource(R.mipmap.food1);
                 }
                 else{
                     imageView.setImageResource(R.mipmap.food);
                 }
             }
-            if (type1.equals("Bebida")){
-                if(price>20.0){
+            if (item.item_type.equals("Bebida")){
+                if(item.item_time>20.0){
                     imageView.setImageResource(R.mipmap.drink1);
                 }
                 else{
                     imageView.setImageResource(R.mipmap.drink);
                 }
             }
-            if (type1.equals("Postre")){
-                if(price>10.0){
+            if (item.item_type.equals("Postre")){
+                if(item.item_time>10.0){
                     imageView.setImageResource(R.mipmap.dessert1);
                 }
                 else{
@@ -72,7 +69,7 @@ public class ShowItemActivity extends ActionBarActivity {
             }
         }
         else{
-            byte[] decodedByte = Base64.decode(image, 0);
+            byte[] decodedByte = Base64.decode(item.item_image, 0);
             Bitmap bm = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
             Drawable img_drawable = new BitmapDrawable(this.getResources(), bm);
             imageView.setImageDrawable(img_drawable);

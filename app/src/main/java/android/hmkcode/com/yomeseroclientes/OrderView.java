@@ -4,11 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 public class OrderView extends ActionBarActivity {
@@ -18,8 +30,8 @@ public class OrderView extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_view);
-        context = this;
         order = (Order) getIntent().getSerializableExtra("order");
+        context = this;
     }
 
     @Override
@@ -37,6 +49,9 @@ public class OrderView extends ActionBarActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        String url = "https://yomeseroserver.herokuapp.com/pedir_cuenta?id="+ order.id;
+                        HttpAsyncTask task = new HttpAsyncTask();
+                        task.execute(url);
                         Intent intent = new Intent(context,MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -44,6 +59,26 @@ public class OrderView extends ActionBarActivity {
                     }
                 });
         alertDialog.show();
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            HttpResponse response = null;
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(urls[0]));
+                response = client.execute(request);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
     }
 
     @Override

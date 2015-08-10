@@ -42,7 +42,7 @@ import java.util.List;
 
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via name/password.
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
@@ -147,7 +147,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     /**
      * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * If there are form errors (invalid name, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
@@ -173,7 +173,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             cancel = true;
         }
 
-        // Check for a valid email address.
+        // Check for a valid name address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -252,13 +252,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
                         ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
 
-                // Select only email addresses.
+                // Select only name addresses.
                 ContactsContract.Contacts.Data.MIMETYPE +
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
                 .CONTENT_ITEM_TYPE},
 
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
+                // Show primary name addresses first. Note that there won't be
+                // a primary name address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
@@ -290,8 +290,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     /**
-     * Use an AsyncTask to fetch the user's email addresses on a background thread, and update
-     * the email text field with results on the main UI thread.
+     * Use an AsyncTask to fetch the user's name addresses on a background thread, and update
+     * the name text field with results on the main UI thread.
      */
     class SetupEmailAutoCompleteTask extends AsyncTask<Void, Void, List<String>> {
 

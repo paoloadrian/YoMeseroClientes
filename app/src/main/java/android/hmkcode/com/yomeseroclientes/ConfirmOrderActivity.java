@@ -33,8 +33,6 @@ import java.util.ArrayList;
 public class ConfirmOrderActivity extends ActionBarActivity {
     private Context context;
     private Order new_order;
-    private ListView orderItemsListView;
-    private OrderArrayAdapter orderItemsArrayAdapter;
     private String[] res;
 
     @Override
@@ -43,16 +41,15 @@ public class ConfirmOrderActivity extends ActionBarActivity {
         setContentView(R.layout.activity_confirm_order);
         new_order = new Order();
         ArrayList<Item> items = (ArrayList<Item>) getIntent().getSerializableExtra("items");
-        ArrayList<Integer> quantities = (ArrayList<Integer>) getIntent().getSerializableExtra("quantities");
-        new_order.getSelectedItemsInOrder(items, quantities);
+        new_order.getSelectedItemsInOrder(items);
         String total = getIntent().getStringExtra("total");
         new_order.total = Float.parseFloat(total);
-        orderItemsListView = (ListView) findViewById(R.id.orderItemsListView);
+        ListView orderItemsListView = (ListView) findViewById(R.id.orderItemsListView);
         TextView totalView = (TextView) findViewById(R.id.totalOrder);
         totalView.setText("Total:   Bs. " + total);
         res = getIntent().getStringArrayExtra("qr");
 
-        orderItemsArrayAdapter = new OrderArrayAdapter(this, new_order);
+        OrderArrayAdapter orderItemsArrayAdapter = new OrderArrayAdapter(this, new_order);
         orderItemsListView.setAdapter(orderItemsArrayAdapter);
     }
 
@@ -62,10 +59,6 @@ public class ConfirmOrderActivity extends ActionBarActivity {
     }
 
     private class HttpAsyncTask extends AsyncTask<Void,Void,Boolean> {
-        String email;
-        String password;
-        String password_confirmation;
-        String id;
 
         @Override
         protected Boolean doInBackground(Void... params){
@@ -76,9 +69,7 @@ public class ConfirmOrderActivity extends ActionBarActivity {
             String url = "https://yomeseroserver.herokuapp.com/create_pedido_json?consumo="+Float.toString(new_order.total)+
                     "&rest="+res[1]+"&mesa="+res[2];
 
-            //url = url.replaceAll(".","_");
             url = url.replaceAll(" ","%20");
-            Log.d("url",url);
             try{
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
@@ -96,19 +87,16 @@ public class ConfirmOrderActivity extends ActionBarActivity {
             try{
                 JSONObject obj = new JSONObject(result);
                 order_id = obj.getString("id");
+                new_order.id = Integer.parseInt(order_id);
             }catch(Throwable t){
                 Log.d("exception: ", t.toString());
                 return false;
             }
             //aca empieza a guardar los items de la orden
-            Log.d("url",order_id);
-            Log.d("exception",order_id);
             for (int i=0;i<new_order.items.size();i++) {
                 url = "https://yomeseroserver.herokuapp.com/create_item_pedido_json?pedido=" + order_id + "&quantity="
-                        + new_order.quantities.get(i) + "&item=" + new_order.items.get(i).id;
-                //url = url.replaceAll(".","_");
+                        + new_order.items.get(i).quantity + "&item=" + new_order.items.get(i).id;
                 url = url.replaceAll(" ","%20");
-                Log.d("url",url);
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpResponse httpResponse = httpClient.execute(new HttpGet(url));
@@ -122,11 +110,9 @@ public class ConfirmOrderActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(final Boolean success){
-            Log.d("Esta en post execute: ", "Siii");
             if (success){
-                Intent intent = new Intent(getApplicationContext(), OrderView.class);
+                Intent intent = new Intent(getApplicationContext(), BillingActivity.class);
                 intent.putExtra("order", new_order);
-                intent.putExtra("qr", res);
                 startActivity(intent);
             }
         }
